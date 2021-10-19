@@ -7,6 +7,28 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class NewPlanController extends GetxController {
+  NewPlanController() {
+    this._title = '';
+    this._content = '';
+    _isEdit = false;
+  }
+
+  NewPlanController.fromPlan({required this.plan}) {
+    _title = plan!.title;
+    _content = plan!.content;
+    _selectedDate = plan!.startTime;
+    _selectedStartTime =
+        TimeOfDay(hour: plan!.startTime.hour, minute: plan!.startTime.minute);
+    _selectedEndTime =
+        TimeOfDay(hour: plan!.endTime.hour, minute: plan!.endTime.minute);
+    _selectedColor = plan!.colorValue;
+    _isEdit = true;
+  }
+  Plan? plan;
+
+  late bool _isEdit;
+  bool get isEdit => _isEdit;
+
   final _formKey = GlobalKey<FormState>();
   get formKey => this._formKey;
 
@@ -19,11 +41,11 @@ class NewPlanController extends GetxController {
   late DateTime _selectedDate;
   DateTime get selectedDate => this._selectedDate;
 
-  List<int> _selectedStartTime = [0, 0];
-  List<int> get selectedStartTime => this._selectedStartTime;
+  TimeOfDay _selectedStartTime = TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay get selectedStartTime => this._selectedStartTime;
 
-  List<int> _selectedEndTime = [24, 0];
-  List<int> get selectedEndTime => this._selectedEndTime;
+  TimeOfDay _selectedEndTime = TimeOfDay(hour: 12, minute: 0);
+  TimeOfDay get selectedEndTime => this._selectedEndTime;
 
   int _selectedColor = defaultColorInt;
   int get selectedColor => this._selectedColor;
@@ -50,20 +72,14 @@ class NewPlanController extends GetxController {
     update();
   }
 
-  void setStartTime(int hour, int minute) {
-    if (hour < 0 || hour > 24 || minute < 0 || minute > 59) return;
-
-    this._selectedStartTime[0] = hour;
-    this._selectedStartTime[1] = minute;
+  void setStartTime(TimeOfDay startTime) {
+    this._selectedStartTime = startTime;
 
     update();
   }
 
-  void setEndTime(int hour, int minute) {
-    if (hour < 0 || hour > 24 || minute < 0 || minute > 59) return;
-
-    this._selectedEndTime[0] = hour;
-    this._selectedEndTime[1] = minute;
+  void setEndTime(TimeOfDay endTime) {
+    this._selectedEndTime = endTime;
 
     update();
   }
@@ -81,19 +97,25 @@ class NewPlanController extends GetxController {
     _formKey.currentState!.save();
 
     final startTime = DateTime(selectedDate.year, selectedDate.month,
-        selectedDate.day, selectedStartTime[0], selectedStartTime[1]);
+        selectedDate.day, selectedStartTime.hour, selectedStartTime.minute);
     final endTime = DateTime(selectedDate.year, selectedDate.month,
-        selectedDate.day, selectedEndTime[0], selectedEndTime[1]);
+        selectedDate.day, selectedEndTime.hour, selectedEndTime.minute);
     final newPlan = Plan(
         startTime: startTime,
         endTime: endTime,
         title: title,
         content: content,
         colorValue: selectedColor,
-        planId: ValueKey(DateTime.now()).toString());
+        planId: _isEdit ? plan!.planId : ValueKey(DateTime.now()).toString());
 
     PlanController planController = Get.put(PlanController());
-    planController.addPlan(newPlan);
+
+    if (this._isEdit) {
+      // TODO: 기존의 플랜 수정하기
+      planController.replacePlan(plan!, newPlan);
+    } else {
+      planController.addPlan(newPlan);
+    }
 
     return true;
   }

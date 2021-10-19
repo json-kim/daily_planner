@@ -1,8 +1,11 @@
 import 'package:daily_planner_app/components/state_button.dart';
 import 'package:daily_planner_app/constants.dart';
+import 'package:daily_planner_app/controllers/new_plan_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/models/plan.dart';
+import 'package:daily_planner_app/screens/add/add_plan_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'components/date_bar.dart';
@@ -10,7 +13,7 @@ import 'components/time_bar.dart';
 import 'components/title_bar.dart';
 
 class PlanDetailScreen extends StatelessWidget {
-  const PlanDetailScreen({Key? key, required this.plan}) : super(key: key);
+  PlanDetailScreen({Key? key, required this.plan}) : super(key: key);
 
   final Plan plan;
 
@@ -79,25 +82,57 @@ class PlanDetailScreen extends StatelessWidget {
   }
 
   AppBar buildAppBar(context) {
+    final _size = MediaQuery.of(context).padding.top;
+    PlanController _planController = Get.put(PlanController());
+
     return AppBar(
       leading: BackButton(
         color: kBlackColor,
       ),
       backgroundColor: Colors.transparent,
       elevation: 0,
-      // title: Hero(
-      //   tag: plan.title,
-      //   child: Text(plan.title,
-      //       style: Theme.of(context)
-      //           .textTheme
-      //           .headline6!
-      //           .copyWith(color: kBlackColor)),
-      // ),
       centerTitle: true,
       actions: [
-        Icon(
-          Icons.edit_outlined,
-          color: kBlackColor,
+        InkWell(
+          borderRadius: BorderRadius.circular(_size / 2),
+          onTap: () {
+            // delete plan button
+            final result = _planController.deletePlan(plan);
+            print(result);
+
+            if (result) {
+              Get.back();
+            } else {
+              if (!Get.isSnackbarOpen!) {
+                Get.snackbar(
+                  '실패',
+                  '플랜 삭제에 실패했습니다.',
+                  isDismissible: true,
+                );
+              }
+            }
+          },
+          child: SizedBox(
+            child: Image.asset(
+              'assets/delete_icon.png',
+              width: _size,
+            ),
+          ),
+        ),
+        InkWell(
+          borderRadius: BorderRadius.circular(_size / 2),
+          onTap: () async {
+            //TODO: 플랜 편집히기
+            final result = await Get.to(GetBuilder<NewPlanController>(
+                init: NewPlanController.fromPlan(plan: plan),
+                global: false,
+                builder: (controller) {
+                  return AddPlanScreen(newPlanController: controller);
+                }));
+
+            if (result) Get.back();
+          },
+          child: Image.asset('assets/edit_icon.png', width: _size),
         ),
         SizedBox(width: defaultPadding)
       ],

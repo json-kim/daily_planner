@@ -16,23 +16,12 @@ class AddPlanBtn extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: defaultPadding, vertical: defaultPadding),
       child: InkWell(
-        onTap: () {
-          // final testPlan = Plan(
-          //   startTime: DateTime.parse("2021-10-03 20:00:00"),
-          //   endTime: DateTime.parse("2021-10-03 21:00:00"),
-          //   title: 'Night Study',
-          //   content: 'Study with Friends on Zoom',
-          //   planId: DateTime.now().toString(),
-          // );
-
-          // _planController.addPlan(testPlan);
-          Get.to(GetBuilder<NewPlanController>(
-              init: NewPlanController(),
-              global: false,
-              builder: (controller) {
-                return AddPlanScreen(newPlanController: controller);
-              }));
-        },
+        onTap: () => Get.to(GetBuilder<NewPlanController>(
+            init: NewPlanController(),
+            global: false,
+            builder: (controller) {
+              return AddPlanScreen(newPlanController: controller);
+            })),
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(

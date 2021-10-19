@@ -33,6 +33,12 @@ class PlanController extends GetxController {
     selectPlansWithDate(_dateController!.selectedDate);
   }
 
+  void replacePlan(Plan oldPlan, newPlan) {
+    final idx = _plans.indexOf(oldPlan);
+    _plans[idx] = newPlan;
+    selectPlansWithDate(_dateController!.selectedDate);
+  }
+
   void planStateChange(Plan plan) {
     plan.nextPlanState();
     update();
@@ -49,5 +55,13 @@ class PlanController extends GetxController {
 
     _selectedPlans = datePlans;
     update();
+  }
+
+  bool deletePlan(Plan plan) {
+    final result = _plans.remove(plan);
+    selectPlansWithDate(_dateController!.selectedDate);
+    update();
+
+    return result;
   }
 }

@@ -22,9 +22,20 @@ class PlanCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: defaultPadding * 0.5,
       ),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () {
           Get.to(PlanDetailScreen(plan: plan));
+        },
+        onLongPress: () async {
+          await showMenu(
+              context: context,
+              position: RelativeRect.fromSize(
+                  Rect.fromPoints(Offset.zero, Offset.zero), Size(100, 100)),
+              items: [
+                PopupMenuItem(child: Text('1번')),
+                PopupMenuItem(child: Text('2번')),
+                PopupMenuItem(child: Text('3번')),
+              ]);
         },
         child: Stack(
           children: [
