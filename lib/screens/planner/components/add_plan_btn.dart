@@ -22,21 +22,37 @@ class AddPlanBtn extends StatelessWidget {
             builder: (controller) {
               return AddPlanScreen(newPlanController: controller);
             })),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              gradient: defaultGradient,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(defaultPadding * 2.5))),
-          child: Text(
-            '일정 추가하기',
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: Colors.white),
-          ),
-        ),
+        child: GetBuilder<PlanController>(
+            init: PlanController(),
+            builder: (controller) {
+              return AnimatedContainer(
+                duration: defaultDuration,
+                // TODO: Size 깔끔하게 고치기
+                width: controller.selectedPlans.length == 0
+                    ? (MediaQuery.of(context).size.width - 2 * defaultPadding)
+                    : MediaQuery.of(context).size.height * 0.1 -
+                        2 * defaultPadding,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    gradient: defaultGradient,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(defaultPadding * 2.5))),
+                child: controller.selectedPlans.length == 0
+                    ? Text(
+                        '일정 추가하기',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: Colors.white),
+                      )
+                    : Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+              );
+            }),
       ),
     );
   }

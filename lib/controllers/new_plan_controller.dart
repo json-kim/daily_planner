@@ -29,6 +29,9 @@ class NewPlanController extends GetxController {
   late bool _isEdit;
   bool get isEdit => _isEdit;
 
+  bool _isTimeError = false;
+  bool get isTimeError => _isTimeError;
+
   final _formKey = GlobalKey<FormState>();
   get formKey => this._formKey;
 
@@ -90,10 +93,20 @@ class NewPlanController extends GetxController {
     update();
   }
 
-  bool planSave() {
+  bool? planSave() {
     if (!_formKey.currentState!.validate()) {
-      return false;
+      return null;
     }
+
+    if (_selectedStartTime.hour > _selectedEndTime.hour ||
+        (_selectedStartTime.hour == _selectedEndTime.hour &&
+            _selectedStartTime.minute > _selectedEndTime.minute)) {
+      _isTimeError = true;
+      update();
+      return null;
+    } else
+      _isTimeError = false;
+
     _formKey.currentState!.save();
 
     final startTime = DateTime(selectedDate.year, selectedDate.month,

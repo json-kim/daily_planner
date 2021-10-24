@@ -49,21 +49,24 @@ class PlanDetailScreen extends StatelessWidget {
                     }),
               ],
             ),
+            Divider(),
             SizedBox(
               height: defaultPadding,
             ),
 
             // DateBar
             DateBar(plan: plan),
+            Divider(),
             SizedBox(
               height: defaultPadding,
             ),
 
             // TimeBar
             TimeBar(startTime: plan.startTime, endTime: plan.endTime),
-            Spacer(),
+            Divider(),
+            SizedBox(height: defaultPadding),
 
-            // D-time Bar
+            Spacer(),
 
             // plan detail content
             Expanded(
@@ -93,12 +96,11 @@ class PlanDetailScreen extends StatelessWidget {
       elevation: 0,
       centerTitle: true,
       actions: [
+        // delete plan button
         InkWell(
           borderRadius: BorderRadius.circular(_size / 2),
-          onTap: () {
-            // delete plan button
-            final result = _planController.deletePlan(plan);
-            print(result);
+          onTap: () async {
+            final result = await _planController.deletePlan(plan);
 
             if (result) {
               Get.back();
@@ -119,10 +121,14 @@ class PlanDetailScreen extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(
+          width: defaultPadding,
+        ),
+
+        // edit plan button
         InkWell(
           borderRadius: BorderRadius.circular(_size / 2),
           onTap: () async {
-            //TODO: 플랜 편집히기
             final result = await Get.to(GetBuilder<NewPlanController>(
                 init: NewPlanController.fromPlan(plan: plan),
                 global: false,
@@ -130,6 +136,7 @@ class PlanDetailScreen extends StatelessWidget {
                   return AddPlanScreen(newPlanController: controller);
                 }));
 
+            if (result == null) return;
             if (result) Get.back();
           },
           child: Image.asset('assets/edit_icon.png', width: _size),

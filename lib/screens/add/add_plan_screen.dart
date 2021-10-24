@@ -38,8 +38,12 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
       // Save Button
       bottomNavigationBar: SaveButton(
         press: () {
-          if (widget.newPlanController.planSave()) {
+          final result = widget.newPlanController.planSave();
+          if (result == null) return;
+          if (result) {
             Get.back(result: widget.newPlanController.isEdit);
+          } else {
+            Get.snackbar('실패', '저장에 실패하였습니다.');
           }
         },
       ),
@@ -78,6 +82,7 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
                 endTime: widget.newPlanController.selectedEndTime,
                 setStartTime: widget.newPlanController.setStartTime,
                 setEndTime: widget.newPlanController.setEndTime,
+                isTimeError: widget.newPlanController.isTimeError,
               ),
               SizedBox(
                 height: defaultPadding,

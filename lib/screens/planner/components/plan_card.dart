@@ -27,15 +27,15 @@ class PlanCard extends StatelessWidget {
           Get.to(PlanDetailScreen(plan: plan));
         },
         onLongPress: () async {
-          await showMenu(
-              context: context,
-              position: RelativeRect.fromSize(
-                  Rect.fromPoints(Offset.zero, Offset.zero), Size(100, 100)),
-              items: [
-                PopupMenuItem(child: Text('1번')),
-                PopupMenuItem(child: Text('2번')),
-                PopupMenuItem(child: Text('3번')),
-              ]);
+          // await showMenu(
+          //     context: context,
+          //     position: RelativeRect.fromSize(
+          //         Rect.fromPoints(Offset.zero, Offset.zero), Size(100, 100)),
+          //     items: [
+          //       PopupMenuItem(child: Text('1번')),
+          //       PopupMenuItem(child: Text('2번')),
+          //       PopupMenuItem(child: Text('3번')),
+          //     ]);
         },
         child: Stack(
           children: [
@@ -43,7 +43,7 @@ class PlanCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                   horizontal: defaultPadding * 2, vertical: defaultPadding),
               width: double.infinity,
-              height: _size.height * 0.15,
+              height: _size.height * 0.17,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   color: Color(plan.colorValue),
@@ -73,26 +73,12 @@ class PlanCard extends StatelessWidget {
                     Row(
                       children: [
                         // Title
-                        Hero(
-                          tag: plan.title,
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/calendar.png',
-                                height: 24,
-                              ),
-                              SizedBox(
-                                width: defaultPadding * 0.3,
-                              ),
-                              Text(
-                                plan.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ],
-                          ),
+                        Text(
+                          plan.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6!
+                              .copyWith(color: Colors.black),
                         ),
                         Spacer(),
 
@@ -116,8 +102,10 @@ class PlanCard extends StatelessWidget {
                         SizedBox(
                           width: defaultPadding * 0.1,
                         ),
-                        Text(
-                            '${DateFormat('HH:mma').format(plan.startTime)}-${DateFormat('HH:mma').format(plan.endTime)}, ${plan.endTime.difference(plan.startTime).inHours} hours'),
+                        FittedBox(
+                          child: Text(
+                              '${DateFormat('HH:mma').format(plan.startTime)}-${DateFormat('HH:mma').format(plan.endTime)}, ${plan.endTime.difference(plan.startTime).inHours} hours'),
+                        ),
                         Spacer(),
 
                         // Profile

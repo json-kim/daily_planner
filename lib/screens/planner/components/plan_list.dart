@@ -21,8 +21,7 @@ class PlanList extends StatelessWidget {
             switchInCurve: Curves.easeIn,
             child: selectedPlans.length != 0
                 ? Container(
-                    key: ValueKey(
-                        controller.dateController.selectedDate.toString()),
+                    key: ValueKey(controller.selectedPlans.toString()),
                     height: double.infinity,
                     //color: kGrayColor,
                     child: SingleChildScrollView(
@@ -40,7 +39,7 @@ class PlanList extends StatelessWidget {
                     ),
                   )
                 : Container(
-                    key: ValueKey(controller.dateController.toString()),
+                    key: ValueKey(controller.selectedPlans.toString()),
                     alignment: Alignment.center,
                     child: Text(
                       '이 날은 아직 계획이 없네요!\n그동안 미뤄왔던 일에 도전해보세요!',

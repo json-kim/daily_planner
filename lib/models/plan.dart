@@ -1,17 +1,10 @@
 import 'package:daily_planner_app/constants.dart';
 
-enum PlanState {
-  now_ing,
-  done,
-  cancled,
-  move_back,
-}
-
 class Plan {
-  final DateTime startTime, endTime;
-  final String title, content, planId;
-  PlanState state;
-  int colorValue;
+  late DateTime startTime, endTime;
+  late String title, content, planId;
+  late bool state;
+  late int colorValue;
 
   Plan({
     required this.startTime,
@@ -19,7 +12,7 @@ class Plan {
     required this.title,
     required this.content,
     required this.planId,
-    this.state = PlanState.now_ing,
+    this.state = false,
     this.colorValue = 0xFFf7cac9,
   });
 
@@ -29,20 +22,31 @@ class Plan {
   }
 
   void nextPlanState() {
-    switch (this.state) {
-      case PlanState.now_ing:
-        this.state = PlanState.done;
-        break;
-      case PlanState.done:
-        this.state = PlanState.cancled;
-        break;
-      case PlanState.cancled:
-        this.state = PlanState.move_back;
-        break;
-      case PlanState.move_back:
-        this.state = PlanState.now_ing;
-        break;
-    }
+    this.state = !this.state;
+  }
+
+  Map<String, dynamic> toMap() {
+    final map = <String, dynamic>{
+      'planId': this.planId,
+      'title': this.title,
+      'content': this.content,
+      'colorValue': this.colorValue.toRadixString(16),
+      'startTime': this.startTime.millisecondsSinceEpoch,
+      'endTime': this.endTime.millisecondsSinceEpoch,
+      'state': this.state ? 1 : 0
+    };
+    return map;
+  }
+
+  Plan.fromMap(Map<String, dynamic> map) {
+    this.planId = map['planId'] as String;
+    this.title = map['title'] as String;
+    this.content = map['content'] as String;
+    this.colorValue = int.parse(map['colorValue'] as String, radix: 16);
+    this.startTime =
+        DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int);
+    this.endTime = DateTime.fromMillisecondsSinceEpoch(map['endTime'] as int);
+    this.state = (map['state'] as int) == 1 ? true : false;
   }
 }
 

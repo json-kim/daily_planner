@@ -13,28 +13,26 @@ class TitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: plan.title,
-      child: Row(
-        children: [
-          Image.asset(
-            'assets/calendar.png',
-            height: 32,
+    return Row(
+      children: [
+        // Plan Color Box
+        Container(width: 24, height: 24, color: Color(plan.colorValue)),
+
+        SizedBox(
+          width: defaultPadding,
+        ),
+
+        // Title
+        FittedBox(
+          child: Text(
+            plan.title,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                  color: kBlackColor,
+                ),
           ),
-          SizedBox(
-            width: defaultPadding * 0.5,
-          ),
-          FittedBox(
-            child: Text(
-              plan.title,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline4!.copyWith(
-                    color: kBlackColor,
-                  ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

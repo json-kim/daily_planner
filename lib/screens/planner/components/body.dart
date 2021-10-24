@@ -1,5 +1,7 @@
+import 'package:daily_planner_app/controllers/date_controller.dart';
 import 'package:daily_planner_app/screens/planner/components/plan_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 import '../../../constants.dart';
 import 'add_plan_btn.dart';
@@ -35,20 +37,6 @@ class Body extends StatelessWidget {
               SizedBox(
                 height: defaultPadding,
               ),
-              // Title
-              Container(
-                child: Text(
-                  'MY PLANNER'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: Colors.black, fontSize: 40),
-                ),
-              ),
-              SizedBox(
-                height: defaultPadding,
-              ),
-
               // DateBar
               DateBar(),
               SizedBox(height: defaultPadding),
@@ -62,7 +50,6 @@ class Body extends StatelessWidget {
         // Add Button
         Positioned(
             bottom: 0,
-            left: 0,
             right: 0,
             height: _size.height * 0.1,
             child: AddPlanBtn())

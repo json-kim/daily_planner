@@ -21,7 +21,8 @@ class DateBar extends StatelessWidget {
         // Date
         Container(
           padding: EdgeInsets.symmetric(
-              vertical: defaultPadding * 0.5, horizontal: defaultPadding),
+            vertical: defaultPadding * 0.5,
+          ),
           child: Text(
             DateFormat('y-M-d E').format(plan.startTime),
             style: Theme.of(context)
@@ -30,9 +31,6 @@ class DateBar extends StatelessWidget {
                 .copyWith(color: kBlackColor),
           ),
         ),
-
-        // Plan Color Box
-        Container(width: 16, height: 16, color: Color(plan.colorValue)),
       ],
     );
   }

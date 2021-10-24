@@ -20,9 +20,9 @@ class StateButton extends StatelessWidget {
     return InkWell(
       onTap: press,
       child: Icon(
-        stateIcons[plan.state.index],
+        Icons.done,
         size: size,
-        color: stateColors[plan.state.index],
+        color: plan.state ? kGreenColor : kGrayColor,
       ),
     );
   }
