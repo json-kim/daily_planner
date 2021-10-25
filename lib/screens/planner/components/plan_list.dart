@@ -1,6 +1,7 @@
 import 'package:daily_planner_app/constants.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/screens/planner/components/plan_card.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -39,12 +40,16 @@ class PlanList extends StatelessWidget {
                     ),
                   )
                 : Container(
+                    // TODO: date bar, bottom bar의 크기를 지정한 뒤 가운데로 세팅
                     key: ValueKey(controller.selectedPlans.toString()),
-                    alignment: Alignment.center,
+                    padding:
+                        EdgeInsets.only(top: getProportionateScreenHeight(240)),
+                    alignment: Alignment.topCenter,
                     child: Text(
                       '이 날은 아직 계획이 없네요!\n그동안 미뤄왔던 일에 도전해보세요!',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                          fontSize: getProportionateScreenHeight(headline6)),
                     ),
                   ),
           );

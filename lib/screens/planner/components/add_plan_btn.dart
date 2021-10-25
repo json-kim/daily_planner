@@ -2,16 +2,18 @@ import 'package:daily_planner_app/constants.dart';
 import 'package:daily_planner_app/controllers/new_plan_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/screens/add/add_plan_screen.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 
 class AddPlanBtn extends StatelessWidget {
-  const AddPlanBtn({Key? key}) : super(key: key);
+  const AddPlanBtn({Key? key, required this.size}) : super(key: key);
+
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    PlanController _planController = Get.put(PlanController());
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: defaultPadding, vertical: defaultPadding),
@@ -29,27 +31,25 @@ class AddPlanBtn extends StatelessWidget {
                 duration: defaultDuration,
                 // TODO: Size 깔끔하게 고치기
                 width: controller.selectedPlans.length == 0
-                    ? (MediaQuery.of(context).size.width - 2 * defaultPadding)
-                    : MediaQuery.of(context).size.height * 0.1 -
-                        2 * defaultPadding,
+                    ? (SizeConfig.screenWidth - 2 * defaultPadding)
+                    : size - 2 * defaultPadding,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     gradient: defaultGradient,
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(defaultPadding * 2.5))),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size * 0.5))),
                 child: controller.selectedPlans.length == 0
                     ? Text(
                         '일정 추가하기',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: Colors.white),
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontSize: getProportionateScreenHeight(headline6),
+                            color: Colors.white),
                       )
                     : Icon(
                         Icons.add,
                         color: Colors.white,
-                        size: 28,
+                        size: getProportionateScreenHeight(28),
                       ),
               );
             }),

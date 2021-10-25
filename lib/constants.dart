@@ -13,7 +13,21 @@ const Gradient defaultGradient = LinearGradient(colors: [
   Color(0xFF6A82FB),
 ], begin: Alignment.centerLeft, end: Alignment.centerRight);
 
+// size
 const double defaultPadding = 16.0;
+const double bottomButtonHeight = 100.0;
+const double cardIconSize = 20.0;
+const double appbarIconSize = 28.0;
+const double rowIconSize = 36.0;
+const double dateListHeight = 50.0;
+
+// font size
+const double headline1 = 36.0;
+const double headline5 = 24.0;
+const double headline6 = 21.0;
+const double subtitle1 = 18.0;
+const double subtitle2 = 15.0;
+
 const Duration defaultDuration = Duration(milliseconds: 300);
 
 const String firstDate = '2021-01-01';

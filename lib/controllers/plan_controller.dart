@@ -28,6 +28,11 @@ class PlanController extends GetxController {
     update();
   }
 
+  void planStateChange(Plan plan) {
+    plan.nextPlanState();
+    update();
+  }
+
   Future<void> addPlan(Plan plan) async {
     final result = await dbCont.insertToTable(plan);
     if (!result) {
@@ -39,7 +44,7 @@ class PlanController extends GetxController {
     selectPlansWithDate(_dateController.selectedDate);
   }
 
-  void replacePlan(Plan oldPlan, newPlan) async {
+  Future<void> replacePlan(Plan oldPlan, newPlan) async {
     final result = await dbCont.updateToTable(oldPlan);
     if (!result) {
       return;
@@ -53,11 +58,6 @@ class PlanController extends GetxController {
 
     DateController _dateController = Get.put(DateController());
     selectPlansWithDate(_dateController.selectedDate);
-  }
-
-  void planStateChange(Plan plan) {
-    plan.nextPlanState();
-    update();
   }
 
   Future<bool> deletePlan(Plan plan) async {

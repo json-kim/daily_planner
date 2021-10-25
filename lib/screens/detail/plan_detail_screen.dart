@@ -4,6 +4,7 @@ import 'package:daily_planner_app/controllers/new_plan_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/models/plan.dart';
 import 'package:daily_planner_app/screens/add/add_plan_screen.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -19,16 +20,18 @@ class PlanDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: buildAppBar(context),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(defaultPadding)),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-              height: defaultPadding,
-            ),
+            VerticalSpacing(),
             Row(
               children: [
                 // Title
@@ -41,7 +44,7 @@ class PlanDetailScreen extends StatelessWidget {
                     builder: (controller) {
                       return StateButton(
                         plan: plan,
-                        size: 32,
+                        size: getProportionateScreenHeight(appbarIconSize),
                         press: () {
                           controller.planStateChange(plan);
                         },
@@ -50,21 +53,17 @@ class PlanDetailScreen extends StatelessWidget {
               ],
             ),
             Divider(),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            VerticalSpacing(),
 
             // DateBar
             DateBar(plan: plan),
             Divider(),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            VerticalSpacing(),
 
             // TimeBar
             TimeBar(startTime: plan.startTime, endTime: plan.endTime),
             Divider(),
-            SizedBox(height: defaultPadding),
+            VerticalSpacing(),
 
             Spacer(),
 
@@ -75,9 +74,10 @@ class PlanDetailScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Text(plan.content,
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: kBlackColor,
-                            )))),
-            SizedBox(height: defaultPadding),
+                            color: kBlackColor,
+                            fontSize:
+                                getProportionateScreenHeight(subtitle1))))),
+            VerticalSpacing(),
           ]),
         ),
       ),
@@ -85,7 +85,6 @@ class PlanDetailScreen extends StatelessWidget {
   }
 
   AppBar buildAppBar(context) {
-    final _size = MediaQuery.of(context).padding.top;
     PlanController _planController = Get.put(PlanController());
 
     return AppBar(
@@ -98,7 +97,7 @@ class PlanDetailScreen extends StatelessWidget {
       actions: [
         // delete plan button
         InkWell(
-          borderRadius: BorderRadius.circular(_size / 2),
+          borderRadius: BorderRadius.circular(SizeConfig.padding.top / 2),
           onTap: () async {
             final result = await _planController.deletePlan(plan);
 
@@ -117,17 +116,15 @@ class PlanDetailScreen extends StatelessWidget {
           child: SizedBox(
             child: Image.asset(
               'assets/delete_icon.png',
-              width: _size,
+              width: getProportionateScreenHeight(appbarIconSize),
             ),
           ),
         ),
-        SizedBox(
-          width: defaultPadding,
-        ),
+        HorizontalSpacing(),
 
         // edit plan button
         InkWell(
-          borderRadius: BorderRadius.circular(_size / 2),
+          borderRadius: BorderRadius.circular(SizeConfig.padding.top / 2),
           onTap: () async {
             final result = await Get.to(GetBuilder<NewPlanController>(
                 init: NewPlanController.fromPlan(plan: plan),
@@ -139,7 +136,8 @@ class PlanDetailScreen extends StatelessWidget {
             if (result == null) return;
             if (result) Get.back();
           },
-          child: Image.asset('assets/edit_icon.png', width: _size),
+          child: Image.asset('assets/edit_icon.png',
+              width: getProportionateScreenHeight(appbarIconSize)),
         ),
         SizedBox(width: defaultPadding)
       ],

@@ -2,6 +2,7 @@ import 'package:daily_planner_app/constants.dart';
 import 'package:daily_planner_app/controllers/new_plan_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/screens/planner/planner_screen.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/get.dart';
@@ -30,9 +31,10 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    PlanController _planController = Get.put(PlanController());
+    SizeConfig.init(context);
 
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: _buildAppBar(),
 
       // Save Button
@@ -49,32 +51,27 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
       ),
 
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(defaultPadding)),
         child: Form(
           key: widget.newPlanController.formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: defaultPadding * 0.5,
-              ),
+              VerticalSpacing(of: defaultPadding / 2),
 
               // Title Input Form
               TitleInputBar(
                 save: (val) => widget.newPlanController.setTitle(val!),
                 initialTitle: widget.newPlanController.title,
               ),
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
 
               // Date Select Bar
               DateSelectBar(
                   date: widget.newPlanController.selectedDate,
                   setDate: widget.newPlanController.setDate),
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
 
               // Time Select Bar
               TimeSelectBar(
@@ -84,17 +81,13 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
                 setEndTime: widget.newPlanController.setEndTime,
                 isTimeError: widget.newPlanController.isTimeError,
               ),
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
 
               // Color Select Bar
               ColorSelectBar(
                   colorValue: widget.newPlanController.selectedColor,
                   setColor: widget.newPlanController.setColor),
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
 
               // Content Input Bar
               Expanded(
@@ -113,10 +106,13 @@ class _AddPlanScreenState extends State<AddPlanScreen> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
+      centerTitle: true,
       title: Text(
         '새로운 일정',
-        style:
-            Theme.of(context).textTheme.headline5!.copyWith(color: kBlackColor),
+        style: Theme.of(context).textTheme.headline5!.copyWith(
+              color: kBlackColor,
+              fontSize: getProportionateScreenHeight(headline5),
+            ),
       ),
       leading: BackButton(
         color: kBlackColor,

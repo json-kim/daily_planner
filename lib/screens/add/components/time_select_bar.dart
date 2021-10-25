@@ -1,3 +1,4 @@
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -25,10 +26,10 @@ class TimeSelectBar extends StatelessWidget {
         Row(
           children: [
             // Time Icon
-            SizedBox(height: 36, child: Image.asset('assets/time_icon.png')),
             SizedBox(
-              width: defaultPadding,
-            ),
+                height: getProportionateScreenHeight(rowIconSize),
+                child: Image.asset('assets/time_icon.png')),
+            HorizontalSpacing(),
 
             // Start Time
             Expanded(
@@ -41,26 +42,28 @@ class TimeSelectBar extends StatelessWidget {
                   setStartTime(chosenStartTime);
                 }
               },
-              borderRadius: BorderRadius.circular(15),
+              borderRadius:
+                  BorderRadius.circular(getProportionateScreenHeight(15)),
               child: Container(
                 padding: EdgeInsets.symmetric(
-                    horizontal: defaultPadding,
-                    vertical: defaultPadding * 0.75),
+                    horizontal: getProportionateScreenWidth(defaultPadding),
+                    vertical:
+                        getProportionateScreenHeight(defaultPadding * 0.75)),
                 decoration: BoxDecoration(
                     border: Border.all(),
-                    borderRadius: BorderRadius.circular(15)),
+                    borderRadius: BorderRadius.circular(
+                        getProportionateScreenHeight(15))),
                 alignment: Alignment.center,
                 child: Text(
                   '${NumberFormat('00').format(startTime.hour)}시 ${NumberFormat('00').format(startTime.minute)}분',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(color: kBlackColor),
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                      color: kBlackColor,
+                      fontSize: getProportionateScreenHeight(headline6)),
                 ),
               ),
             )),
             SizedBox(
-              width: defaultPadding,
+              width: getProportionateScreenWidth(defaultPadding),
               child: Center(
                   child: Text(
                 '~',
@@ -81,21 +84,23 @@ class TimeSelectBar extends StatelessWidget {
                     setEndTime(chosenEndTime);
                   }
                 },
-                borderRadius: BorderRadius.circular(15),
+                borderRadius:
+                    BorderRadius.circular(getProportionateScreenHeight(15)),
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: defaultPadding,
-                      vertical: defaultPadding * 0.75),
+                      horizontal: getProportionateScreenWidth(defaultPadding),
+                      vertical:
+                          getProportionateScreenHeight(defaultPadding * 0.75)),
                   decoration: BoxDecoration(
                       border: Border.all(),
-                      borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(
+                          getProportionateScreenHeight(15))),
                   alignment: Alignment.center,
                   child: Text(
                     '${NumberFormat('00').format(endTime.hour)}시 ${NumberFormat('00').format(endTime.minute)}분',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: kBlackColor),
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: kBlackColor,
+                        fontSize: getProportionateScreenHeight(headline6)),
                   ),
                 ),
               ),
@@ -104,11 +109,12 @@ class TimeSelectBar extends StatelessWidget {
         ),
         if (isTimeError)
           Padding(
-            padding: EdgeInsets.only(top: defaultPadding / 2),
+            padding: EdgeInsets.only(
+                top: getProportionateScreenHeight(defaultPadding * 0.5)),
             child: Text('시간 설정을 바르게 해주세요!',
                 style: TextStyle(
-                  color: kRedColor,
-                )),
+                    color: kRedColor,
+                    fontSize: getProportionateScreenHeight(14))),
           ),
       ],
     );

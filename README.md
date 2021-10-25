@@ -18,21 +18,22 @@ get, intl, flutter_localizations, flutter_colorpicker, pull_to_refresh, google_f
 </br>
 
 ### 10/8  
-일정추가페이지(AddPlanScreen) 제작
+#### AddPlanScreen
+ + ##### 일정추가페이지(AddPlanScreen) 제작
 
 </br>
 
 ### 10/9  
-AddPlanScreen 상태관리를 위한 NewPlanController 추가
+#### NewPlanController
+ + ##### AddPlanScreen 상태관리를 위한 NewPlanController 추가
 
 </br>
 
 ### 10/10
-특정 theme을 적용시키는 Theme 위젯.
-시간 선택 ui/ux추가 (TimeOfDay TimePicker 사용)
-AddPlanScreen에서 components분리
-함수를 인자로 하위위젯에 전달할 때는, Function, VoidCallBack, ValueChanged<T>를 사용한다.
-Plan의 color선택 ui/ux추가 (flutter_colorpicker 패키지 사용)
+#### AddPlanScreen
+ + ##### 시간 선택 ui/ux추가 (TimeOfDay TimePicker 사용)
+ + ##### AddPlanScreen에서 components분리
+ + ##### Plan의 color선택 ui/ux추가 (flutter_colorpicker 패키지 사용)
 
 </br>
 
@@ -44,8 +45,9 @@ Plan의 color선택 ui/ux추가 (flutter_colorpicker 패키지 사용)
 </br>
 
 ### 10/18
-플랜 편집한 후 저장하는 기능 추가
-똑같이 NewPlanController를 사용하고 새로 생성할 때와 수정할 때 다른 생성자 사용
+#### AddPlanScreen, NewPlanController, PlanController
+ + ##### 플랜 편집한 후 저장하는 기능 추가
+ + ##### 똑같이 NewPlanController를 사용하고 새로 생성할 때와 수정할 때 다른 생성자 사용
 
 </br>
 
@@ -84,3 +86,18 @@ Plan의 color선택 ui/ux추가 (flutter_colorpicker 패키지 사용)
  + ##### sqflite 패키지를 사용하여 sqlite의 db에 테이블을 생성하여 저장
  + ##### plan을 insert, update, delete
  + ##### plan에 toMap, fromMap 메소드 추가
+
+ </br>
+
+### 10/24
+#### PlannerScreen
+ + ##### PlanCard ui 개선
+ + ##### SizeConfig 이용하여 반응형 앱으로 제작(plannerScreen)
+
+</br>
+
+### 10/25
+#### PlanDetailScreen, AddPlanScreen
+ + ##### SizeConfig 이용하여 반응형 앱으로 제작(PlanDetailScreen, AddPlanScreen)
+#### constants
+ + ##### fontSize를 headline1~6, subtitle1~2로 구분

@@ -1,4 +1,5 @@
 import 'package:daily_planner_app/models/plan.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -21,14 +22,13 @@ class DateBar extends StatelessWidget {
         // Date
         Container(
           padding: EdgeInsets.symmetric(
-            vertical: defaultPadding * 0.5,
+            vertical: getProportionateScreenHeight(defaultPadding * 0.5),
           ),
           child: Text(
             DateFormat('y-M-d E').format(plan.startTime),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: kBlackColor),
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: kBlackColor,
+                fontSize: getProportionateScreenHeight(headline6)),
           ),
         ),
       ],

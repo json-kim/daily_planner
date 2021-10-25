@@ -1,3 +1,4 @@
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -19,10 +20,10 @@ class ColorSelectBar extends StatelessWidget {
     return Row(
       children: [
         // Color Icon
-        SizedBox(height: 36, child: Image.asset('assets/color_icon.png')),
         SizedBox(
-          width: defaultPadding,
-        ),
+            height: getProportionateScreenHeight(rowIconSize),
+            child: Image.asset('assets/color_icon.png')),
+        HorizontalSpacing(),
 
         // Color Box
         Expanded(
@@ -43,21 +44,24 @@ class ColorSelectBar extends StatelessWidget {
                 setColor(chosenColor.value);
               }
             },
-            borderRadius: BorderRadius.circular(15),
+            borderRadius:
+                BorderRadius.circular(getProportionateScreenHeight(15)),
             child: Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding, vertical: defaultPadding * 0.75),
+                  horizontal: getProportionateScreenWidth(defaultPadding),
+                  vertical:
+                      getProportionateScreenHeight(defaultPadding * 0.75)),
               decoration: BoxDecoration(
                   color: Color(colorValue),
                   border: Border.all(color: kGrayColor),
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius:
+                      BorderRadius.circular(getProportionateScreenHeight(15))),
               alignment: Alignment.center,
               child: Text(
                 '  ',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: Colors.transparent),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: Colors.transparent,
+                    fontSize: getProportionateScreenHeight(headline6)),
               ),
             ),
           ),

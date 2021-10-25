@@ -1,4 +1,5 @@
 import 'package:daily_planner_app/models/plan.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -16,11 +17,12 @@ class TitleBar extends StatelessWidget {
     return Row(
       children: [
         // Plan Color Box
-        Container(width: 24, height: 24, color: Color(plan.colorValue)),
+        Container(
+            width: getProportionateScreenHeight(24),
+            height: getProportionateScreenHeight(24),
+            color: Color(plan.colorValue)),
 
-        SizedBox(
-          width: defaultPadding,
-        ),
+        HorizontalSpacing(),
 
         // Title
         FittedBox(
@@ -28,8 +30,7 @@ class TitleBar extends StatelessWidget {
             plan.title,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headline4!.copyWith(
-                  color: kBlackColor,
-                ),
+                color: kBlackColor, fontSize: getProportionateScreenHeight(32)),
           ),
         ),
       ],

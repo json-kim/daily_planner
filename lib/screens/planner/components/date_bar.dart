@@ -1,5 +1,6 @@
 import 'package:daily_planner_app/controllers/date_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/instance_manager.dart';
@@ -36,8 +37,7 @@ class _DateBarState extends State<DateBar> {
 
   @override
   Widget build(BuildContext context) {
-    DateController _dateController = Get.put(DateController());
-    final _size = MediaQuery.of(context).size;
+    SizeConfig.init(context);
 
     return GetBuilder<DateController>(
         init: DateController(),
@@ -50,27 +50,26 @@ class _DateBarState extends State<DateBar> {
                 children: [
                   Text(
                     'Plan ${controller.selectedDate.year}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(color: Colors.black, fontSize: 40),
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                        color: Colors.black,
+                        fontSize: getProportionateScreenHeight(headline1)),
                   ),
 
                   // back to the selectedDate Button
                   IconButton(
                     onPressed: () {
-                      final offset = (_size.width - 2 * defaultPadding) *
-                          (controller.getSelectedDateIndex() ~/ 7);
+                      final offset =
+                          (SizeConfig.screenWidth - 2 * defaultPadding) *
+                              (controller.getSelectedDateIndex() ~/ 7);
                       _scrollController.animateTo(offset + 5,
                           curve: Curves.easeIn, duration: defaultDuration);
                     },
-                    icon: Icon(Icons.refresh),
+                    icon: Icon(Icons.refresh,
+                        size: getProportionateScreenHeight(appbarIconSize)),
                   ),
                 ],
               ),
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
 
               // 요일 목록
               Container(
@@ -84,14 +83,12 @@ class _DateBarState extends State<DateBar> {
                           )),
                 ),
               ),
-              SizedBox(
-                height: defaultPadding * 0.2,
-              ),
+              VerticalSpacing(of: defaultPadding * 0.2),
 
               // Date List
               Container(
                 width: double.infinity,
-                height: _size.height * 0.05,
+                height: getProportionateScreenHeight(dateListHeight),
                 child: SmartRefresher(
                   enablePullDown: true,
                   enablePullUp: true,
@@ -136,7 +133,10 @@ class _DateBarState extends State<DateBar> {
                     itemBuilder: (context, index) {
                       return DateCard(
                         date: controller.dates[index],
-                        size: (_size.width - defaultPadding * 2) / 7,
+                        size: (SizeConfig.screenWidth -
+                                getProportionateScreenWidth(defaultPadding) *
+                                    2) /
+                            7,
                       );
                     },
                   ),
@@ -162,7 +162,8 @@ class DateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: size,
-        padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 0.2),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(defaultPadding * 0.2)),
         child: GetBuilder<DateController>(
             init: DateController(),
             builder: (controller) {
@@ -187,8 +188,8 @@ class DateCard extends StatelessWidget {
                   child: FittedBox(
                     child: Text('${date.month}/${date.day}',
                         style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                              color: Colors.black,
-                            )),
+                            color: Colors.black,
+                            fontSize: getProportionateScreenWidth(15))),
                   ),
                 ),
               );

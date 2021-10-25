@@ -1,3 +1,4 @@
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -40,45 +41,35 @@ class TimeBar extends StatelessWidget {
         // start time
         Container(
           padding: EdgeInsets.symmetric(
-            vertical: defaultPadding,
+            vertical: getProportionateScreenHeight(defaultPadding),
           ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Text(
-            DateFormat('HH:mm').format(startTime),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: kBlackColor),
-          ),
+          child: Text(DateFormat('HH:mm').format(startTime),
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: kBlackColor,
+                  fontSize: getProportionateScreenHeight(headline6))),
         ),
 
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 0.2),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(defaultPadding * 0.2)),
           child: Text(
             '~',
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: kBlackColor),
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: kBlackColor,
+                fontSize: getProportionateScreenHeight(headline6)),
           ),
         ),
 
         // end time
         Container(
           padding: EdgeInsets.symmetric(
-            vertical: defaultPadding,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            vertical: getProportionateScreenHeight(defaultPadding),
           ),
           child: Text(
             DateFormat('HH:mm').format(endTime),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(color: kBlackColor),
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: kBlackColor,
+                fontSize: getProportionateScreenHeight(headline6)),
           ),
         ),
 
@@ -87,23 +78,19 @@ class TimeBar extends StatelessWidget {
         // Total Time and D-time
         Container(
           padding: EdgeInsets.symmetric(
-            vertical: defaultPadding,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            vertical: getProportionateScreenHeight(defaultPadding),
           ),
           child: Column(
             children: [
               Text(
                 'total ${endTime.difference(startTime).inHours < 1 ? endTime.difference(startTime).inMinutes.toString() + ' mins' : endTime.difference(startTime).inHours.toString() + ' hours'}',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: kBlackColor),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: kBlackColor,
+                    fontSize: getProportionateScreenHeight(headline6)),
               ),
               Text(getDTimeString(startTime, endTime),
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: getProportionateScreenHeight(14),
                     color: kRedColor,
                   ))
             ],

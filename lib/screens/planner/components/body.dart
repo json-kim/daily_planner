@@ -1,5 +1,6 @@
 import 'package:daily_planner_app/controllers/date_controller.dart';
 import 'package:daily_planner_app/screens/planner/components/plan_list.dart';
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 
@@ -10,15 +11,11 @@ import 'date_bar.dart';
 class Body extends StatelessWidget {
   const Body({
     Key? key,
-    required Size size,
-  })  : _size = size,
-        super(key: key);
-
-  final Size _size;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
+    SizeConfig.init(context);
 
     return Stack(
       fit: StackFit.expand,
@@ -30,16 +27,15 @@ class Body extends StatelessWidget {
         )),
         SafeArea(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(defaultPadding)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: defaultPadding,
-              ),
+              VerticalSpacing(),
               // DateBar
               DateBar(),
-              SizedBox(height: defaultPadding),
+              VerticalSpacing(),
 
               // PlanList
               Expanded(child: PlanList()),
@@ -51,8 +47,9 @@ class Body extends StatelessWidget {
         Positioned(
             bottom: 0,
             right: 0,
-            height: _size.height * 0.1,
-            child: AddPlanBtn())
+            height: getProportionateScreenHeight(bottomButtonHeight),
+            child: AddPlanBtn(
+                size: getProportionateScreenHeight(bottomButtonHeight)))
       ],
     );
   }

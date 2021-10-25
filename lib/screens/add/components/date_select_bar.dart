@@ -1,3 +1,4 @@
+import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,14 +20,12 @@ class DateSelectBar extends StatelessWidget {
       children: [
         // Date Icon
         SizedBox(
-          height: 36,
+          height: getProportionateScreenHeight(rowIconSize),
           child: Image.asset(
             'assets/calendar_icon.png',
           ),
         ),
-        SizedBox(
-          width: defaultPadding,
-        ),
+        HorizontalSpacing(),
 
         // Date(Month, Day, Weekday)
         Expanded(
@@ -45,20 +44,23 @@ class DateSelectBar extends StatelessWidget {
                 setDate(chosenDate);
               }
             },
-            borderRadius: BorderRadius.circular(15),
+            borderRadius:
+                BorderRadius.circular(getProportionateScreenHeight(15)),
             child: Container(
               padding: EdgeInsets.symmetric(
-                  horizontal: defaultPadding, vertical: defaultPadding * 0.75),
+                  horizontal: getProportionateScreenWidth(defaultPadding),
+                  vertical:
+                      getProportionateScreenHeight(defaultPadding * 0.75)),
               decoration: BoxDecoration(
                   border: Border.all(),
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius:
+                      BorderRadius.circular(getProportionateScreenHeight(15))),
               alignment: Alignment.center,
               child: Text(
                 DateFormat('MM월 dd일 E', 'ko').format(date),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6!
-                    .copyWith(color: kBlackColor),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: kBlackColor,
+                    fontSize: getProportionateScreenHeight(headline6)),
               ),
             ),
           ),

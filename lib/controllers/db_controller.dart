@@ -97,7 +97,8 @@ class DBController {
 
   Future<bool> insertToTable(Plan plan) async {
     try {
-      _db.insert(tablePlan, plan.toMap());
+      final result = await _db.insert(tablePlan, plan.toMap());
+      if (result == 0) return false;
     } catch (e) {
       print('DBController.insertToTable() error occurred! at Plan:$plan');
       return false;
@@ -109,7 +110,7 @@ class DBController {
     try {
       final result = await _db
           .delete(tablePlan, where: 'planId = ?', whereArgs: [plan.planId]);
-      print('talbe delete result is $result');
+      if (result < 1) return false;
     } catch (e) {
       print(
           'DBController.deleteFromTable(Plan plan) error eccured! at Plan:$plan');
@@ -120,13 +121,13 @@ class DBController {
 
   Future<bool> updateToTable(Plan plan) async {
     try {
-      final result = _db.update(
+      final result = await _db.update(
         tablePlan,
         plan.toMap(),
         where: 'planId = ?',
         whereArgs: [plan.planId],
       );
-      print('table update result is $result');
+      if (result < 1) return false;
     } catch (e) {
       print(
           'DBController.updateToTable(Plan plan) error occurred! at Plan:$plan');
