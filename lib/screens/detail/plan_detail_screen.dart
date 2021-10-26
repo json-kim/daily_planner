@@ -1,3 +1,4 @@
+import 'package:daily_planner_app/components/appbar_icon_button.dart';
 import 'package:daily_planner_app/components/state_button.dart';
 import 'package:daily_planner_app/constants.dart';
 import 'package:daily_planner_app/controllers/new_plan_controller.dart';
@@ -32,26 +33,26 @@ class PlanDetailScreen extends StatelessWidget {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             VerticalSpacing(),
-            Row(
-              children: [
-                // Title
-                TitleBar(plan: plan),
-                Spacer(),
+            GetBuilder<PlanController>(
+                init: PlanController(),
+                builder: (controller) {
+                  return Row(
+                    children: [
+                      // Title
+                      TitleBar(plan: plan),
+                      Spacer(),
 
-                // State Icon
-                GetBuilder<PlanController>(
-                    init: PlanController(),
-                    builder: (controller) {
-                      return StateButton(
+                      // State Icon
+                      StateButton(
                         plan: plan,
                         size: getProportionateScreenHeight(appbarIconSize),
                         press: () {
                           controller.planStateChange(plan);
                         },
-                      );
-                    }),
-              ],
-            ),
+                      ),
+                    ],
+                  );
+                }),
             Divider(),
             VerticalSpacing(),
 
@@ -95,10 +96,21 @@ class PlanDetailScreen extends StatelessWidget {
       elevation: 0,
       centerTitle: true,
       actions: [
+        // share plan button
+        AppBarIconButton(
+          imgSrc: 'assets/share_icon.png',
+          press: () {
+            print('share button press');
+          },
+          radius: SizeConfig.padding.top / 2,
+          paddingSize: getProportionateScreenWidth(defaultPadding * 0.75),
+          size: getProportionateScreenHeight(appbarIconSize),
+        ),
+
         // delete plan button
-        InkWell(
-          borderRadius: BorderRadius.circular(SizeConfig.padding.top / 2),
-          onTap: () async {
+        AppBarIconButton(
+          imgSrc: 'assets/delete_icon.png',
+          press: () async {
             final result = await _planController.deletePlan(plan);
 
             if (result) {
@@ -113,19 +125,15 @@ class PlanDetailScreen extends StatelessWidget {
               }
             }
           },
-          child: SizedBox(
-            child: Image.asset(
-              'assets/delete_icon.png',
-              width: getProportionateScreenHeight(appbarIconSize),
-            ),
-          ),
+          radius: SizeConfig.padding.top / 2,
+          paddingSize: getProportionateScreenWidth(defaultPadding * 0.75),
+          size: getProportionateScreenHeight(appbarIconSize),
         ),
-        HorizontalSpacing(),
 
         // edit plan button
-        InkWell(
-          borderRadius: BorderRadius.circular(SizeConfig.padding.top / 2),
-          onTap: () async {
+        AppBarIconButton(
+          imgSrc: 'assets/edit_icon.png',
+          press: () async {
             final result = await Get.to(GetBuilder<NewPlanController>(
                 init: NewPlanController.fromPlan(plan: plan),
                 global: false,
@@ -136,10 +144,10 @@ class PlanDetailScreen extends StatelessWidget {
             if (result == null) return;
             if (result) Get.back();
           },
-          child: Image.asset('assets/edit_icon.png',
-              width: getProportionateScreenHeight(appbarIconSize)),
+          radius: SizeConfig.padding.top / 2,
+          paddingSize: getProportionateScreenWidth(defaultPadding * 0.75),
+          size: getProportionateScreenHeight(appbarIconSize),
         ),
-        SizedBox(width: defaultPadding)
       ],
     );
   }

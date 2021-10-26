@@ -84,10 +84,13 @@ class PlanCard extends StatelessWidget {
                           plan.title,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .subtitle1!
                               .copyWith(
+                                  decoration: plan.state
+                                      ? TextDecoration.lineThrough
+                                      : null,
                                   fontSize:
-                                      getProportionateScreenHeight(headline6),
+                                      getProportionateScreenHeight(subtitle1),
                                   color: Colors.black),
                         ),
                         Spacer(),

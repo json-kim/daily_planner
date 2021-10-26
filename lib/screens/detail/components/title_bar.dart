@@ -29,8 +29,10 @@ class TitleBar extends StatelessWidget {
           child: Text(
             plan.title,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline4!.copyWith(
-                color: kBlackColor, fontSize: getProportionateScreenHeight(32)),
+            style: Theme.of(context).textTheme.headline5!.copyWith(
+                decoration: plan.state ? TextDecoration.lineThrough : null,
+                color: kBlackColor,
+                fontSize: getProportionateScreenHeight(headline5)),
           ),
         ),
       ],

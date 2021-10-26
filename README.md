@@ -1,19 +1,23 @@
-# Language  
+# &#128204; 설명
+일상을 계획하고 체크해나가는 ios / android 앱입니다.  
+<br/><br/>
+
+# &#128221; Language  
 Dart  
 <br/><br/>
 
-# Framework  
+# &#128241; Framework  
 Flutter  
 <br/><br/>
 
-# 패키지  
+# &#128230; 패키지  
 get, intl, flutter_localizations, flutter_colorpicker, pull_to_refresh, google_fonts, sqflite  
 <br/><br/>
 
-# 일정
-### ~10/7  
-메인화면(PlannerScreen), 일정상세페이지(PlanDetailScreen) 추가
-일정들, 날짜 상태를 관리하는 PlanController, DateController 추가
+# &#128197;	일정
+### ~10/7
+#### PlannerScreen, PlanDetailScreen, PlanController, DateController
+ + ##### 일정메인페이지(PlannerScreen), 일정상세페이지(PlanDetailScreen), 일정관리(PlanController), 날짜관리(DateController) 제작
 
 </br>
 
@@ -101,3 +105,11 @@ get, intl, flutter_localizations, flutter_colorpicker, pull_to_refresh, google_f
  + ##### SizeConfig 이용하여 반응형 앱으로 제작(PlanDetailScreen, AddPlanScreen)
 #### constants
  + ##### fontSize를 headline1~6, subtitle1~2로 구분
+
+</br>
+
+### 10/26
+#### PlanDetailScreen, PlannerScreen
+ + ##### ui개선, 공유버튼 추가
+#### DBController
+ + ##### 일정의 진행상태가 바뀌면 DB에도 반영되도록 수정

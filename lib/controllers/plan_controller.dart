@@ -1,7 +1,6 @@
 import 'package:daily_planner_app/controllers/date_controller.dart';
 import 'package:daily_planner_app/controllers/db_controller.dart';
 import 'package:daily_planner_app/models/plan.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
 
@@ -28,8 +27,9 @@ class PlanController extends GetxController {
     update();
   }
 
-  void planStateChange(Plan plan) {
+  Future<void> planStateChange(Plan plan) async {
     plan.nextPlanState();
+    await dbCont.updateToTable(plan);
     update();
   }
 

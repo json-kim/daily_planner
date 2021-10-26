@@ -23,6 +23,7 @@ const double dateListHeight = 50.0;
 
 // font size
 const double headline1 = 36.0;
+const double headline4 = 27.0;
 const double headline5 = 24.0;
 const double headline6 = 21.0;
 const double subtitle1 = 18.0;
