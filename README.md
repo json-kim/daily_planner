@@ -113,3 +113,11 @@ get, intl, flutter_localizations, flutter_colorpicker, pull_to_refresh, google_f
  + ##### ui개선, 공유버튼 추가
 #### DBController
  + ##### 일정의 진행상태가 바뀌면 DB에도 반영되도록 수정
+
+</br>
+
+### 10/27
+#### KakaoController
+ + ##### 카카오링크 공유 기능 추가
+#### DBController
+ + ##### 플랜 수정사항이 DB에 반영되지 않는 문제 해결

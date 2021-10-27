@@ -33,3 +33,5 @@ const Duration defaultDuration = Duration(milliseconds: 300);
 
 const String firstDate = '2021-01-01';
 const List<String> dateString = ['월', '화', '수', '목', '금', '토', '일'];
+
+const kakaoAppKey = '994d07500c68ff85739b5678d4e2a823';

@@ -3,6 +3,9 @@
    <application
         android:label="daily_planner_app"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="994d07500c68ff85739b5678d4e2a823"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -1,6 +1,7 @@
 import 'package:daily_planner_app/components/appbar_icon_button.dart';
 import 'package:daily_planner_app/components/state_button.dart';
 import 'package:daily_planner_app/constants.dart';
+import 'package:daily_planner_app/controllers/kakao_controller.dart';
 import 'package:daily_planner_app/controllers/new_plan_controller.dart';
 import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/models/plan.dart';
@@ -99,8 +100,9 @@ class PlanDetailScreen extends StatelessWidget {
         // share plan button
         AppBarIconButton(
           imgSrc: 'assets/share_icon.png',
-          press: () {
-            print('share button press');
+          press: () async {
+            KakaoController.init();
+            await KakaoController().share(plan);
           },
           radius: SizeConfig.padding.top / 2,
           paddingSize: getProportionateScreenWidth(defaultPadding * 0.75),

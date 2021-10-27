@@ -45,7 +45,7 @@ class PlanController extends GetxController {
   }
 
   Future<void> replacePlan(Plan oldPlan, newPlan) async {
-    final result = await dbCont.updateToTable(oldPlan);
+    final result = await dbCont.updateToTable(newPlan);
     if (!result) {
       return;
     }
