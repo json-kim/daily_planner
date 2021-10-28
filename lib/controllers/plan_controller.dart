@@ -30,7 +30,9 @@ class PlanController extends GetxController {
   Future<void> planStateChange(Plan plan) async {
     plan.nextPlanState();
     await dbCont.updateToTable(plan);
-    update();
+
+    DateController _dateController = Get.put(DateController());
+    selectPlansWithDate(_dateController.selectedDate);
   }
 
   Future<void> addPlan(Plan plan) async {
@@ -84,8 +86,15 @@ class PlanController extends GetxController {
       }
     });
     datePlans.sort(
-      (Plan a, Plan b) => a.startTime.millisecondsSinceEpoch
-          .compareTo(b.startTime.millisecondsSinceEpoch),
+      (Plan a, Plan b) {
+        final aState = a.state ? 1 : 0;
+        final bState = b.state ? 1 : 0;
+        int firstCompare = aState.compareTo(bState);
+
+        if (firstCompare != 0) return firstCompare;
+        return a.startTime.millisecondsSinceEpoch
+            .compareTo(b.startTime.millisecondsSinceEpoch);
+      },
     );
     _selectedPlans = datePlans;
     update();

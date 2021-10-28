@@ -25,14 +25,18 @@ class TitleBar extends StatelessWidget {
         HorizontalSpacing(),
 
         // Title
-        FittedBox(
-          child: Text(
-            plan.title,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline5!.copyWith(
-                decoration: plan.state ? TextDecoration.lineThrough : null,
-                color: kBlackColor,
-                fontSize: getProportionateScreenHeight(headline5)),
+        AnimatedSwitcher(
+          duration: defaultDuration,
+          child: FittedBox(
+            key: ValueKey(plan.state),
+            child: Text(
+              plan.title,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                  decoration: plan.state ? TextDecoration.lineThrough : null,
+                  color: kBlackColor,
+                  fontSize: getProportionateScreenHeight(headline5)),
+            ),
           ),
         ),
       ],

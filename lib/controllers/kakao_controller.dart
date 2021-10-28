@@ -36,7 +36,7 @@ class KakaoController {
         '\${plan_end_time}': '${DateFormat('hh:mm a').format(plan.endTime)}',
         '\${plan_content}': '${plan.content}',
       });
-      await launchBrowserTab(uri);
+      await LinkClient.instance.launchKakaoTalk(uri);
     } catch (e) {}
   }
 

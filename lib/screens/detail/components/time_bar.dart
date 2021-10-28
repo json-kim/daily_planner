@@ -1,17 +1,21 @@
+import 'package:daily_planner_app/controllers/plan_controller.dart';
 import 'package:daily_planner_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 
 class TimeBar extends StatelessWidget {
-  const TimeBar({
+  TimeBar({
     Key? key,
     required this.startTime,
     required this.endTime,
+    required this.state,
   }) : super(key: key);
 
   final DateTime startTime, endTime;
+  final bool state;
 
   String getDTimeString(DateTime start, DateTime end) {
     final now = DateTime.now();
@@ -30,7 +34,7 @@ class TimeBar extends StatelessWidget {
     } else if (now.isAfter(start) && now.isBefore(end)) {
       return '진행 중 입니다.';
     } else {
-      return '종료되었습니다.';
+      return '시간이 종료 되었습니다.';
     }
   }
 
@@ -73,27 +77,39 @@ class TimeBar extends StatelessWidget {
           ),
         ),
 
-        Spacer(),
-
         // Total Time and D-time
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: getProportionateScreenHeight(defaultPadding),
-          ),
-          child: Column(
-            children: [
-              Text(
-                'total ${endTime.difference(startTime).inHours < 1 ? endTime.difference(startTime).inMinutes.toString() + ' mins' : endTime.difference(startTime).inHours.toString() + ' hours'}',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                    color: kBlackColor,
-                    fontSize: getProportionateScreenHeight(headline6)),
-              ),
-              Text(getDTimeString(startTime, endTime),
-                  style: TextStyle(
-                    fontSize: getProportionateScreenHeight(14),
-                    color: kRedColor,
-                  ))
-            ],
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: getProportionateScreenHeight(defaultPadding),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'total ${endTime.difference(startTime).inHours < 1 ? endTime.difference(startTime).inMinutes.toString() + ' mins' : endTime.difference(startTime).inHours.toString() + ' hours'}',
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                      color: kBlackColor,
+                      fontSize: getProportionateScreenHeight(headline6)),
+                ),
+                AnimatedSwitcher(
+                  duration: defaultDuration,
+                  child: Container(
+                    width: double.infinity,
+                    key: ValueKey(state),
+                    child: Text(
+                        state
+                            ? '완료 되었습니다.'
+                            : getDTimeString(startTime, endTime),
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          fontSize: getProportionateScreenHeight(14),
+                          color: kRedColor,
+                        )),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

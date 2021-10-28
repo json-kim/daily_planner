@@ -31,56 +31,64 @@ class PlanDetailScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: getProportionateScreenWidth(defaultPadding)),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            VerticalSpacing(),
-            GetBuilder<PlanController>(
-                init: PlanController(),
-                builder: (controller) {
-                  return Row(
+          child: GetBuilder<PlanController>(
+              init: PlanController(),
+              builder: (controller) {
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
-                      TitleBar(plan: plan),
+                      VerticalSpacing(),
+                      Row(
+                        children: [
+                          // Title
+                          TitleBar(plan: plan),
+                          Spacer(),
+
+                          // State Icon
+                          StateButton(
+                            plan: plan,
+                            size: getProportionateScreenHeight(appbarIconSize),
+                            press: () {
+                              controller.planStateChange(plan);
+                            },
+                          ),
+                        ],
+                      ),
+                      Divider(),
+                      VerticalSpacing(),
+
+                      // DateBar
+                      DateBar(plan: plan),
+                      Divider(),
+                      VerticalSpacing(),
+
+                      // TimeBar
+                      TimeBar(
+                          startTime: plan.startTime,
+                          endTime: plan.endTime,
+                          state: plan.state),
+                      Divider(),
+                      VerticalSpacing(),
+
                       Spacer(),
 
-                      // State Icon
-                      StateButton(
-                        plan: plan,
-                        size: getProportionateScreenHeight(appbarIconSize),
-                        press: () {
-                          controller.planStateChange(plan);
-                        },
-                      ),
-                    ],
-                  );
-                }),
-            Divider(),
-            VerticalSpacing(),
-
-            // DateBar
-            DateBar(plan: plan),
-            Divider(),
-            VerticalSpacing(),
-
-            // TimeBar
-            TimeBar(startTime: plan.startTime, endTime: plan.endTime),
-            Divider(),
-            VerticalSpacing(),
-
-            Spacer(),
-
-            // plan detail content
-            Expanded(
-                flex: 10,
-                child: Container(
-                    width: double.infinity,
-                    child: Text(plan.content,
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: kBlackColor,
-                            fontSize:
-                                getProportionateScreenHeight(subtitle1))))),
-            VerticalSpacing(),
-          ]),
+                      // plan detail content
+                      Expanded(
+                          flex: 10,
+                          child: Container(
+                              width: double.infinity,
+                              child: Text(plan.content,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1!
+                                      .copyWith(
+                                          color: kBlackColor,
+                                          fontSize:
+                                              getProportionateScreenHeight(
+                                                  subtitle1))))),
+                      VerticalSpacing(),
+                    ]);
+              }),
         ),
       ),
     );
